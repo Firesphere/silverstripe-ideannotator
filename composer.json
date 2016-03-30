@@ -19,5 +19,8 @@
   "extra": {
     "installer-name": "ideannotator"
   },
+  "suggest": {
+    "apigen/apigen": "If you want to have html-docs generated from your docblocks."
+  },
   "target-dir": "ideannotator"
 }

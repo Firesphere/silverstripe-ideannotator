@@ -8,7 +8,7 @@
  *
  * @property DataObject|Annotatable owner
  */
-class Annotatable extends DataExtension
+class Annotatable extends DataExtension implements Flushable
 {
 
     /**
@@ -21,12 +21,29 @@ class Annotatable extends DataExtension
      */
     protected $permissionChecker;
 
+    /**
+     * Annotatable constructor.
+     */
     public function __construct() {
         parent::__construct();
         $this->annotator = Injector::inst()->get('DataObjectAnnotator');
         $this->permissionChecker = Injector::inst()->get('AnnotatePermissionChecker');
-
     }
+
+    /**
+     * After the request, generate the docs.
+     * @inheritdoc
+     */
+    public static function flush()
+    {
+        if(Config::inst()->get('DataObjectAnnotator', 'generate_documentation') === true) {
+            $modules = Config::inst()->get('DataObjectAnnotator', 'documentation_modules');
+            foreach($modules as $module => $location) {
+                exec(Director::baseFolder() . "/vendor/apigen/apigen/bin/apigen generate -q -s " . Director::baseFolder() . "/$module -d " . Director::baseFolder() . "/$location/$module --exclude=*tests* --todo ");
+            }
+        }
+    }
+
     /**
      * This is the base function on which annotations are started.
      *

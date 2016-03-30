@@ -8,5 +8,6 @@ DataObject:
   extensions:
     - Annotatable
 DataObjectAnnotator:
-    enabled_modules:
-      - mysite
+  enabled_modules:
+    - mysite
+  generate_documentation: false

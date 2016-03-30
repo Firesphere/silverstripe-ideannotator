@@ -42,6 +42,13 @@ class DataObjectAnnotator extends Object
     private static $enabled_modules = array('mysite');
 
     /**
+     * @config
+     * Generate documentation after generating docblocks?
+     * @var bool
+     */
+    private static $generate_documentation = false;
+
+    /**
      * @var array
      * Available properties to generate docblocks for.
      */
